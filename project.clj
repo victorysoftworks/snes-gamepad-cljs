@@ -1,4 +1,4 @@
-(defproject snes-gamepad "1.1.0"
+(defproject snes-gamepad "1.0.0"
   :description "A ClojureScript library providing a simple interface for using USB SNES gamepads in HTML5 game projects."
   :url "https://github.com/victorysoftworks/snes-gamepad-cljs"
   :license {:name "Eclipse Public License"

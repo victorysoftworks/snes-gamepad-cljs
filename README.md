@@ -22,6 +22,24 @@ The SNES Gamepad library allows you to bind handler functions to SNES gamepad ev
      snes-gamepad/enable!)
 ```
 
+## Manually Reading Pressed Buttons
+
+If you need to read the list of pressed gamepad buttons manually, you can do so with the `pressed-buttons!` function.
+
+```clojure
+(snes-gamepad/pressed-buttons! gamepad)
+```
+
+The `pressed-buttons!` function returns an vector of keywords representing each button that is currently pressed:
+
+```clojure
+[:up :down :left :right :a :b :x :y :left-bumper :right-bumper :select :start]
+```
+
+If no buttons are being pressed on the gamepad, or if there is no gamepad connected, this function returns an empty vector.
+
+You are encouraged to place your manual checking for button presses inside an `on-connected` callback, preferably within a `js/setInterval` or `js/requestAnimationFrame` function that can be cancelled if the `on-disconnected` callback fires.
+
 ## Function Reference
 
 | Function                   | Parameters             | Description                                                                                                                                        |
@@ -43,6 +61,8 @@ The SNES Gamepad library allows you to bind handler functions to SNES gamepad ev
 | `on-right-bumper-pressed`  | `gamepad handler`      | Binds a handler function to execute when the right bumper is pressed.                                                                              |
 | `on-select-button-pressed` | `gamepad handler`      | Binds a handler function to execute when the select button is pressed.                                                                             |
 | `on-start-button-pressed`  | `gamepad handler`      | Binds a handler function to execute when the start button is pressed.                                                                              |
+| `pressed-buttons!`         | `gamepad`              | Returns a vector of keywords representing the buttons currently being pressed on the gamepad.                                                      |
+
 
 ## Available Mappings
 

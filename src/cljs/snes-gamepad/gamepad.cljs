@@ -195,21 +195,20 @@
   "Returns an SNES gamepad with the given button mapping and no
    button press handlers."
   [button-mapping]
-  {:handlers {
-      :connected []
-      :disconnected []
-      :up []
-      :down []
-      :left []
-      :right []
-      :a []
-      :b []
-      :x []
-      :y []
-      :left-bumper []
-      :right-bumper []
-      :select []
-      :start []}
+  {:handlers {:connected []
+              :disconnected []
+              :up []
+              :down []
+              :left []
+              :right []
+              :a []
+              :b []
+              :x []
+              :y []
+              :left-bumper []
+              :right-bumper []
+              :select []
+              :start []}
     :button-mapping button-mapping
     :usb nil
     :animation-frame 0
@@ -300,3 +299,26 @@
   "Binds a handler function to execute when the start button is pressed."
   [gamepad handler]
   (with-button-press-handler gamepad :start handler))
+
+(defn pressed-buttons!
+  "Returns all buttons currently being pressed on the gamepad, expressed as
+  keywords. If no buttons are being pressed, or if no controller is connected,
+  this function returns an empty vector."
+  [gamepad]
+  (let [gamepad (get-connected-gamepad gamepad)
+        pressed-buttons []]
+    (if (gamepad-connected? gamepad)
+      (cond-> pressed-buttons
+              (up-pressed? gamepad) (conj :up)
+              (down-pressed? gamepad) (conj :down)
+              (left-pressed? gamepad) (conj :left)
+              (right-pressed? gamepad) (conj :right)
+              (a-pressed? gamepad) (conj :a)
+              (b-pressed? gamepad) (conj :b)
+              (x-pressed? gamepad) (conj :x)
+              (y-pressed? gamepad) (conj :y)
+              (left-bumper-pressed? gamepad) (conj :left-bumper)
+              (right-bumper-pressed? gamepad) (conj :right-bumper)
+              (select-pressed? gamepad) (conj :select)
+              (start-pressed? gamepad) (conj :start))
+      [])))

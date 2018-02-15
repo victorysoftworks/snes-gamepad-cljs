@@ -15,11 +15,12 @@ The SNES Gamepad library allows you to bind handler functions to SNES gamepad ev
   (:require [snes-gamepad.mapping :as button-mapping]
             [snes-gamepad.gamepad :as snes-gamepad]))
 
-(-> (snes-gamepad/snes-gamepad button-mapping/kiwitata)
-    (snes-gamepad/on-connected #(.log js/console "SNES gamepad connected!"))
-    (snes-gamepad/on-disconnected #(.log js/console "SNES gamepad disconnected."))
-    (snes-gamepad/on-b-button-pressed #(.log js/console "Samus jumps into the air!"))
-     snes-gamepad/enable!)
+(def gamepad (-> (snes-gamepad/snes-gamepad button-mapping/kiwitata)
+                 (snes-gamepad/on-connected #(.log js/console "SNES gamepad connected!"))
+                 (snes-gamepad/on-disconnected #(.log js/console "SNES gamepad disconnected."))
+                 (snes-gamepad/on-b-button-pressed #(.log js/console "Samus jumps into the air!"))))
+
+(snes-gamepad/enable! gamepad)
 ```
 
 ## Manually Reading Pressed Buttons
@@ -30,7 +31,7 @@ If you need to read the list of pressed gamepad buttons manually, you can do so 
 (snes-gamepad/pressed-buttons! gamepad)
 ```
 
-The `pressed-buttons!` function returns an vector of keywords representing each button that is currently pressed:
+The `pressed-buttons!` function returns a vector of keywords representing each button that is currently pressed:
 
 ```clojure
 [:up :down :left :right :a :b :x :y :left-bumper :right-bumper :select :start]
@@ -38,7 +39,7 @@ The `pressed-buttons!` function returns an vector of keywords representing each 
 
 If no buttons are being pressed on the gamepad, or if there is no gamepad connected, this function returns an empty vector.
 
-You are encouraged to place your manual checking for button presses inside an `on-connected` callback, preferably within a `js/setInterval` or `js/requestAnimationFrame` function that can be cancelled if the `on-disconnected` callback fires.
+You are encouraged to place your manual checking for button presses inside an `on-connected` callback, preferably within a `.setInterval` or `.requestAnimationFrame` function that can be cancelled if the `on-disconnected` callback fires.
 
 ## Function Reference
 

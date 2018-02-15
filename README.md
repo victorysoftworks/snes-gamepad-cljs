@@ -2,7 +2,7 @@
 
 A ClojureScript library providing a simple event handler interface for using USB SNES gamepads in HTML5 game projects.
 
-[![Clojars Project](https://img.shields.io/clojars/v/snes-gamepad.svg)](https://clojars.org/snes-gamepad)
+Version: `1.1.0`
 
 For more on the :video_game: Gamepad API, see https://w3c.github.io/gamepad/ and https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API.
 
